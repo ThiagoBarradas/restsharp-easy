@@ -3,7 +3,7 @@
 
 # RestSharp Easy
 
-:)
+Complement for RestSharp to create fast and easily API Clients (SDK) with Newtonsoft serialization and Serilog Log
 
 ## Install via NuGet
 
