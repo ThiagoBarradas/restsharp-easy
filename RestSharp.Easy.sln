@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestSharp.Easy", "RestSharp.Easy\RestSharp.Easy.csproj", "{58B8BDDA-8AB5-43F4-A529-511E70254CDB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5940DC95-02C7-482A-928A-EC89B5FAA4C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{880520E1-140C-42A1-86CD-408DE4CB41EF}"
+	ProjectSection(SolutionItems) = preProject
+		.github\CONTRIBUTING.md = .github\CONTRIBUTING.md
+		.github\ISSUE_TEMPLATE.md = .github\ISSUE_TEMPLATE.md
+		LICENSE = LICENSE
+		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{26168463-0785-4CC2-A03C-576693F482E8}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "devops", "devops", "{44D751B3-DBFA-45CE-940B-EF67039ACB1E}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58B8BDDA-8AB5-43F4-A529-511E70254CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58B8BDDA-8AB5-43F4-A529-511E70254CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58B8BDDA-8AB5-43F4-A529-511E70254CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58B8BDDA-8AB5-43F4-A529-511E70254CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{880520E1-140C-42A1-86CD-408DE4CB41EF} = {5940DC95-02C7-482A-928A-EC89B5FAA4C6}
+		{26168463-0785-4CC2-A03C-576693F482E8} = {5940DC95-02C7-482A-928A-EC89B5FAA4C6}
+		{44D751B3-DBFA-45CE-940B-EF67039ACB1E} = {5940DC95-02C7-482A-928A-EC89B5FAA4C6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14F0ED5C-A6BA-40DA-8621-CA7A130504EE}
+	EndGlobalSection
+EndGlobal
