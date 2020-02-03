@@ -7,6 +7,14 @@ namespace RestSharp.Easy.Interfaces
 {
     public interface IEasyRestClient
     {
+        void AddAuthorization(string authorization);
+        
+        void AddBearer(string bearer);
+        
+        void AddBasic(string basic);
+
+        void AddBasic(string username, string password);
+
         BaseResponse<TSuccess, TError> SendRequest<TSuccess, TError>(
             HttpMethod method, 
             string endpoint, 
