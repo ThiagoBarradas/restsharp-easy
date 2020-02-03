@@ -1,3 +1,4 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/qj4tylgaanpjvpex/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoBarradas/restsharp-easy/branch/master)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/RestSharp.Easy.svg)](https://www.nuget.org/packages/RestSharp.Easy/)
 [![NuGet Version](https://img.shields.io/nuget/v/RestSharp.Easy.svg)](https://www.nuget.org/packages/RestSharp.Easy/)
 
