@@ -18,7 +18,7 @@ namespace RestSharp.Easy.Interfaces
         BaseResponse<TSuccess, TError> SendRequest<TSuccess, TError>(
             HttpMethod method, 
             string endpoint, 
-            object body, 
+            object body = null, 
             IDictionary<string, string> query = null, 
             IDictionary<string, string> headers = null)
                where TSuccess : class, new() 
@@ -27,7 +27,7 @@ namespace RestSharp.Easy.Interfaces
         Task<BaseResponse<TSuccess, TError>> SendRequestAsync<TSuccess, TError>(
             HttpMethod method,
             string endpoint,
-            object body,
+            object body = null,
             IDictionary<string, string> query = null,
             IDictionary<string, string> headers = null)
                where TSuccess : class, new()
@@ -36,7 +36,7 @@ namespace RestSharp.Easy.Interfaces
         BaseResponse<TSuccess> SendRequest<TSuccess>(
            HttpMethod method,
            string endpoint,
-           object body,
+           object body = null,
            IDictionary<string, string> query = null,
            IDictionary<string, string> headers = null)
               where TSuccess : class, new();
@@ -44,7 +44,7 @@ namespace RestSharp.Easy.Interfaces
         Task<BaseResponse<TSuccess>> SendRequestAsync<TSuccess>(
             HttpMethod method,
             string endpoint,
-            object body,
+            object body = null,
             IDictionary<string, string> query = null,
             IDictionary<string, string> headers = null)
                where TSuccess : class, new();
