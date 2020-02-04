@@ -19,7 +19,7 @@ namespace RestSharp.Easy.Console
             };
 
             Log.Logger = builder
-                .UseSuggestedSetting("Lifecycle", "Billing.SDK")
+                .UseSuggestedSetting("RestSharp", "RestSharp.Easy")
                 .SetupSeq(seqOptions)
                 .BuildLogger();
 
