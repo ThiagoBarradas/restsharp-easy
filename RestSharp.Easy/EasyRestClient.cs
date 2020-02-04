@@ -77,15 +77,6 @@ namespace RestSharp.Easy
             where TSuccess : class, new()
             where TError : class, new()
         {
-            return this.SendRequestAsync<TSuccess, TError>(method, endpoint, body, query, headers)
-                 .GetAwaiter()
-                 .GetResult();
-        }
-
-        public async Task<BaseResponse<TSuccess, TError>> SendRequestAsync<TSuccess, TError>(HttpMethod method, string endpoint, object body = null, IDictionary<string, string> query = null, IDictionary<string, string> headers = null)
-            where TSuccess : class, new()
-            where TError : class, new()
-        {
             BaseResponse<TSuccess, TError> response = new BaseResponse<TSuccess, TError>();
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -116,13 +107,23 @@ namespace RestSharp.Easy
                 response.RawRequest = JsonConvert.SerializeObject(body, JsonSerializerSettings);
             }
 
-            var restResponse = await this.RestClient.ExecuteAsync<TSuccess>(restRequest);
+            var restResponse = this.RestClient.Execute<TSuccess>(restRequest);
             this.HandleResponse(response, restResponse);
 
             stopwatch.Stop();
             response.ElapsedTime = stopwatch.ElapsedMilliseconds;
 
             return response;
+        }
+
+        public async Task<BaseResponse<TSuccess, TError>> SendRequestAsync<TSuccess, TError>(HttpMethod method, string endpoint, object body = null, IDictionary<string, string> query = null, IDictionary<string, string> headers = null)
+            where TSuccess : class, new()
+            where TError : class, new()
+        {
+            return await Task.Factory.StartNew(() =>
+            {
+                return this.SendRequest<TSuccess, TError>(method, endpoint, body, query, headers);
+            });
         }
 
         public BaseResponse<TSuccess> SendRequest<TSuccess>(HttpMethod method, string endpoint, object body = null, IDictionary<string, string> query = null, IDictionary<string, string> headers = null) where TSuccess : class, new()
