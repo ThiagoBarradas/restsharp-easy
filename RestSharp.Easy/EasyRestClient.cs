@@ -171,7 +171,7 @@ namespace RestSharp.Easy
             this.JsonSerializerSettings = strategy.GetNewtonsoftJsonSerializerSettings();
 
             this.NewtonsoftRestsharpJsonSerializer = new NewtonsoftRestsharpJsonSerializer(this.JsonSerializer);
-            this.RestClient.AddNewtonsoftResponseHandler(this.NewtonsoftRestsharpJsonSerializer);
+            client.AddNewtonsoftResponseHandler(this.NewtonsoftRestsharpJsonSerializer);
 
             this.RestClient = client;
         }
