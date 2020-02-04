@@ -25,9 +25,12 @@ namespace RestSharp.Easy.Console
 
             Log.Logger.Error("TESTE");
 
-            var client = new EasyRestClient("https://stgapi.mundipagg.com/datadash/v1", requestKey: "12345");
+            var client = new EasyRestClient("http://pruu.herokuapp.com/dump", requestKey: "12345");
 
-            var result = client.SendRequestAsync<dynamic>(HttpMethod.Get, "").GetAwaiter().GetResult();
+            var body = new { test = "xxx" };
+
+            var result = client.SendRequestAsync<dynamic>(HttpMethod.Post, "restsharp-easy", body)
+                .GetAwaiter().GetResult();
 
             Thread.Sleep(5000);
         }
