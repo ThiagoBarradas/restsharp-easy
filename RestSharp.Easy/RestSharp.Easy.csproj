@@ -16,8 +16,9 @@
 
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-      <PackageReference Include="PackUtils" Version="1.0.61" />
-      <PackageReference Include="RestSharp.Serilog.Auto" Version="1.0.41" />
+      <PackageReference Include="PackUtils" Version="1.0.65" />
+      <PackageReference Include="RestSharp" Version="106.10.1" />
+      <PackageReference Include="RestSharp.Serilog.Auto" Version="1.0.44" />
     </ItemGroup>
 
 </Project>
