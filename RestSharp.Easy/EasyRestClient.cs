@@ -155,7 +155,7 @@ namespace RestSharp.Easy
 
             client.Configuration.JsonBlacklist = configuration.JsonLogBlacklist;
 
-            client.AddDefaultHeader("User-Agent", configuration.UserAgent);
+            client.UserAgent = configuration.UserAgent;
 
             if (configuration.DefaultHeaders != null)
             {
