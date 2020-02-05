@@ -26,6 +26,14 @@ namespace RestSharp.Easy.Models
         {
             get
             {
+                return (this.Is2XX && this.Exception == null);
+            }
+        }
+
+        public bool Is2XX
+        {
+            get
+            {
                 if (this.StatusCode == null)
                 {
                     return false;

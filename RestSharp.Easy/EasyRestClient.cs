@@ -77,12 +77,20 @@ namespace RestSharp.Easy
             where TSuccess : class, new()
             where TError : class, new()
         {
+            return this.SendRequestAsync<TSuccess, TError>(method, endpoint, body, query, headers)
+                .GetAwaiter().GetResult();
+        }
+
+        public async Task<BaseResponse<TSuccess, TError>> SendRequestAsync<TSuccess, TError>(HttpMethod method, string endpoint, object body = null, IDictionary<string, string> query = null, IDictionary<string, string> headers = null)
+            where TSuccess : class, new()
+            where TError : class, new()
+        {
             BaseResponse<TSuccess, TError> response = new BaseResponse<TSuccess, TError>();
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             var restSharpMethod = EnumUtility.ConvertToEnum<Method>(method.Method.ToUpper());
-            var restRequest = new RestRequest(restSharpMethod);
+            var restRequest = new RestRequest(endpoint, restSharpMethod);
             restRequest.AddNewtonsoftRequestHandler(this.NewtonsoftRestsharpJsonSerializer);
 
             if (headers != null)
@@ -107,23 +115,13 @@ namespace RestSharp.Easy
                 response.RawRequest = JsonConvert.SerializeObject(body, JsonSerializerSettings);
             }
 
-            var restResponse = this.RestClient.Execute<TSuccess>(restRequest);
+            var restResponse = await this.RestClient.ExecuteAsync<TSuccess>(restRequest);
             this.HandleResponse(response, restResponse);
 
             stopwatch.Stop();
             response.ElapsedTime = stopwatch.ElapsedMilliseconds;
 
             return response;
-        }
-
-        public async Task<BaseResponse<TSuccess, TError>> SendRequestAsync<TSuccess, TError>(HttpMethod method, string endpoint, object body = null, IDictionary<string, string> query = null, IDictionary<string, string> headers = null)
-            where TSuccess : class, new()
-            where TError : class, new()
-        {
-            return await Task.Factory.StartNew(() =>
-            {
-                return this.SendRequest<TSuccess, TError>(method, endpoint, body, query, headers);
-            });
         }
 
         public BaseResponse<TSuccess> SendRequest<TSuccess>(HttpMethod method, string endpoint, object body = null, IDictionary<string, string> query = null, IDictionary<string, string> headers = null) where TSuccess : class, new()
@@ -199,7 +197,14 @@ namespace RestSharp.Easy
             if (restResponse.IsSuccessful == false && 
                 string.IsNullOrWhiteSpace(response.RawResponse) == false)
             {
-                response.Error = JsonConvert.DeserializeObject<TError>(response.RawResponse, this.JsonSerializerSettings);
+                try
+                {
+                    response.Error = JsonConvert.DeserializeObject<TError>(response.RawResponse, this.JsonSerializerSettings);
+                } 
+                catch(Exception e)
+                {
+                    response.Exception = e;
+                }
             }
         }
     }

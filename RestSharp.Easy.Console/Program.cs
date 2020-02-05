@@ -32,6 +32,8 @@ namespace RestSharp.Easy.Console
             var result = client.SendRequestAsync<dynamic>(HttpMethod.Post, "restsharp-easy", body)
                 .GetAwaiter().GetResult();
 
+            var result2 = client.SendRequest<dynamic>(HttpMethod.Post, "restsharp-easy", body);
+
             Thread.Sleep(5000);
         }
     }
