@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="RestSharp.Serilog.Auto" Version="1.0.42" />
     <PackageReference Include="Serilog.Builder" Version="1.0.25" />
   </ItemGroup>
 
