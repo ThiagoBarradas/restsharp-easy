@@ -115,7 +115,7 @@ namespace RestSharp.Easy
                 response.RawRequest = JsonConvert.SerializeObject(body, JsonSerializerSettings);
             }
 
-            var restResponse = await this.RestClient.ExecuteAsync<TSuccess>(restRequest);
+            var restResponse = await this.RestClient.ExecuteAsync(restRequest, restRequest.Method);
             this.HandleResponse(response, restResponse);
 
             stopwatch.Stop();
@@ -177,7 +177,7 @@ namespace RestSharp.Easy
 
         private void HandleResponse<TSuccess, TError>(
             BaseResponse<TSuccess, TError> response, 
-            IRestResponse<TSuccess> restResponse)
+            IRestResponse restResponse)
         {
             response.StatusCode = restResponse.StatusCode;
             response.RawResponse = restResponse.Content;
@@ -188,10 +188,16 @@ namespace RestSharp.Easy
             }
 
             if (restResponse.IsSuccessful == true &&
-                string.IsNullOrWhiteSpace(response.RawResponse) == false &&
-                restResponse.Data != null)
+                string.IsNullOrWhiteSpace(response.RawResponse) == false)
             {
-                response.Data = restResponse.Data;
+                try
+                {
+                    response.Data = JsonConvert.DeserializeObject<TSuccess>(response.RawResponse, this.JsonSerializerSettings);
+                }
+                catch (Exception e)
+                {
+                    response.Exception = e;
+                }
             }
             
             if (restResponse.IsSuccessful == false && 
