@@ -27,7 +27,7 @@ namespace RestSharp.Easy.Console
 
             var client = new EasyRestClient("http://pruu.herokuapp.com/dump", requestKey: "12345");
 
-            var body = new { test = "xxx" };
+            var body = new { test = "xxx", PersonTest = PersonTest.FirstName };
 
             var result = client.SendRequestAsync<dynamic>(HttpMethod.Post, "restsharp-easy", body)
                 .GetAwaiter().GetResult();
@@ -36,5 +36,10 @@ namespace RestSharp.Easy.Console
 
             Thread.Sleep(5000);
         }
+    }
+
+    public enum PersonTest
+    {
+        FirstName
     }
 }
