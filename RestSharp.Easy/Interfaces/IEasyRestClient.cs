@@ -7,6 +7,8 @@ namespace RestSharp.Easy.Interfaces
 {
     public interface IEasyRestClient
     {
+        IRestClient RestClient { get; set; }
+        
         void AddAuthorization(string authorization);
         
         void AddBearer(string bearer);

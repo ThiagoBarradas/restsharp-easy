@@ -14,7 +14,7 @@ namespace RestSharp.Easy
 {
     public class EasyRestClient : IEasyRestClient
     {
-        private IRestClient RestClient;
+        public IRestClient RestClient { get; set; }
 
         private NewtonsoftRestsharpJsonSerializer NewtonsoftRestsharpJsonSerializer;
 
