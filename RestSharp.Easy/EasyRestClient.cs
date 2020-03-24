@@ -23,7 +23,7 @@ namespace RestSharp.Easy
         private JsonSerializerSettings JsonSerializerSettings;
 
         public EasyRestClient(
-            string baseUrl,
+            string baseUrl = null,
             IDictionary<string, string> defaultHeaders = null,
             SerializeStrategyEnum serializeStrategy = SerializeStrategyEnum.SnakeCase,
             int timeoutInMs = 60000,
@@ -136,7 +136,9 @@ namespace RestSharp.Easy
 
         private void Initialize(EasyRestClientConfiguration configuration)
         {
-            var client = new RestClientAutolog(configuration.BaseUrl);
+            var client = (string.IsNullOrEmpty(configuration.BaseUrl))
+                ? new RestClientAutolog()
+                : new RestClientAutolog(configuration.BaseUrl);
 
             client.Timeout = configuration.TimeoutInMs;
             
