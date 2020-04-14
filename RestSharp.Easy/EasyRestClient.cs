@@ -30,7 +30,8 @@ namespace RestSharp.Easy
             string requestKey = null,
             IDictionary<string, string> additionalLogItems = null,
             string userAgent = "RestSharp Easy! https://github.com/ThiagoBarradas/restsharp-easy",
-            string[] jsonBlackList = null)
+            string[] jsonBlackList = null,
+            List<JsonConverter> converters = null)
         {
             var config = new EasyRestClientConfiguration
             {
@@ -41,7 +42,8 @@ namespace RestSharp.Easy
                 RequestKey = requestKey,
                 AdditionalLogItems = additionalLogItems,
                 UserAgent = userAgent,
-                JsonLogBlacklist = jsonBlackList ?? EasyRestClientConfiguration.DefaultJsonBlacklist
+                JsonLogBlacklist = jsonBlackList ?? EasyRestClientConfiguration.DefaultJsonBlacklist,
+                Converters = converters
             };
 
             this.Initialize(config);
@@ -170,6 +172,15 @@ namespace RestSharp.Easy
             var strategy = configuration.SerializeStrategy.ToString();
             this.JsonSerializer = strategy.GetNewtonsoftJsonSerializer();
             this.JsonSerializerSettings = strategy.GetNewtonsoftJsonSerializerSettings();
+
+            if (configuration.Converters != null)
+            {
+                foreach(var converter in configuration.Converters)
+                {
+                    this.JsonSerializer.Converters.Add(converter);
+                    this.JsonSerializerSettings.Converters.Add(converter);
+                }
+            }
 
             this.NewtonsoftRestsharpJsonSerializer = new NewtonsoftRestsharpJsonSerializer(this.JsonSerializer);
             client.AddNewtonsoftResponseHandler(this.NewtonsoftRestsharpJsonSerializer);

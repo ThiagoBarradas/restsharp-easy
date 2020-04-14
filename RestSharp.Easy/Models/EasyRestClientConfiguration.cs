@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace RestSharp.Easy.Models
 {
@@ -32,6 +33,8 @@ namespace RestSharp.Easy.Models
         public string RequestKey { get; set; }
 
         public IDictionary<string, string> AdditionalLogItems { get; set; }
+
+        public List<JsonConverter> Converters { get; set; }
 
         public string MerchantId { get; set; }
 
