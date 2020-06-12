@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{26168463-078
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "devops", "devops", "{44D751B3-DBFA-45CE-940B-EF67039ACB1E}"
 	ProjectSection(SolutionItems) = preProject
-		appveyor.yml = appveyor.yml
+		azure-pipelines.yml = azure-pipelines.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestSharp.Easy.Console", "RestSharp.Easy.Console\RestSharp.Easy.Console.csproj", "{2766A973-38F8-4A8E-A43A-E76A1E73D941}"

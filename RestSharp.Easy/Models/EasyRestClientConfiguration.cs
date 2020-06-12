@@ -32,6 +32,8 @@ namespace RestSharp.Easy.Models
 
         public string RequestKey { get; set; }
 
+        public bool EnableLog { get; set; }
+
         public IDictionary<string, string> AdditionalLogItems { get; set; }
 
         public List<JsonConverter> Converters { get; set; }
