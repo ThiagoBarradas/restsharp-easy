@@ -1,7 +1,8 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/qj4tylgaanpjvpex/branch/master?svg=true)](https://ci.appveyor.com/project/ThiagoBarradas/restsharp-easy/branch/master)
+
 [![NuGet Downloads](https://img.shields.io/nuget/dt/RestSharp.Easy.svg)](https://www.nuget.org/packages/RestSharp.Easy/)
 [![NuGet Version](https://img.shields.io/nuget/v/RestSharp.Easy.svg)](https://www.nuget.org/packages/RestSharp.Easy/)
-
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ThiagoBarradas_restsharp-easy&metric=alert_status)](https://sonarcloud.io/dashboard?id=ThiagoBarradas_restsharp-easy)
+<!-- [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ThiagoBarradas_restsharp-easy&metric=coverage)](https://sonarcloud.io/dashboard?id=ThiagoBarradas_restsharp-easy) -->
 # RestSharp Easy
 
 Complement for RestSharp to create fast and easily API Clients (SDK) with Newtonsoft serialization and Serilog Log
