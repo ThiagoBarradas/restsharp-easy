@@ -31,7 +31,8 @@ namespace RestSharp.Easy
             IDictionary<string, string> additionalLogItems = null,
             string userAgent = "RestSharp Easy! https://github.com/ThiagoBarradas/restsharp-easy",
             string[] jsonBlackList = null,
-            List<JsonConverter> converters = null)
+            List<JsonConverter> converters = null,
+            bool enableLog = true)
         {
             var config = new EasyRestClientConfiguration
             {
@@ -43,7 +44,8 @@ namespace RestSharp.Easy
                 AdditionalLogItems = additionalLogItems,
                 UserAgent = userAgent,
                 JsonLogBlacklist = jsonBlackList ?? EasyRestClientConfiguration.DefaultJsonBlacklist,
-                Converters = converters
+                Converters = converters,
+                EnableLog = enableLog
             };
 
             this.Initialize(config);
@@ -143,6 +145,7 @@ namespace RestSharp.Easy
                 : new RestClientAutolog(configuration.BaseUrl);
 
             client.Timeout = configuration.TimeoutInMs;
+            client.EnableLog(configuration.EnableLog);
             
             if (configuration.RequestKey != null)
             {
