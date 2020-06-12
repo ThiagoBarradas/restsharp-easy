@@ -1,4 +1,4 @@
-
+[![Build Status](https://barradas.visualstudio.com/Contributions/_apis/build/status/NugetPackage/RestSharp%20Easy?branchName=master)](https://barradas.visualstudio.com/Contributions/_build/latest?definitionId=15&branchName=master)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/RestSharp.Easy.svg)](https://www.nuget.org/packages/RestSharp.Easy/)
 [![NuGet Version](https://img.shields.io/nuget/v/RestSharp.Easy.svg)](https://www.nuget.org/packages/RestSharp.Easy/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ThiagoBarradas_restsharp-easy&metric=alert_status)](https://sonarcloud.io/dashboard?id=ThiagoBarradas_restsharp-easy)
