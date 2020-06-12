@@ -190,10 +190,12 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: 'Packing Release'
       inputs:
-        command: pack
+        command: 'pack'
         packagesToPack: '$(sdk_project_path)'
-        versioningScheme: byEnvVar
-        versionEnvVar: ReleaseVersion
+        configuration: 'Release'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'ReleaseVersion'
+        verbosityPack: 'Diagnostic'
     - task: PublishPipelineArtifact@1
       displayName: Store Nuget Packages
       inputs:

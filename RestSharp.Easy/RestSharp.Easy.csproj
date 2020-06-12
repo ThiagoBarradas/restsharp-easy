@@ -3,22 +3,21 @@
     <PropertyGroup>
       <TargetFramework>netstandard2.0</TargetFramework>
 	  <Authors>Thiago Barradas</Authors>
+	  <Company>Thiago Barradas</Company>
 	  <Description>Complement for RestSharp to create fast and easily API Clients (SDK) with Newtonsoft serialization and Serilog Log</Description>
 	  <PackageTags>restsharp, serilog, apiclient, sdk, newtonsoft, easy, log, requestkey</PackageTags>
 	  <RepositoryUrl>https://github.com/ThiagoBarradas/restsharp-easy</RepositoryUrl>
 	  <PackageLicenseUrl>https://github.com/ThiagoBarradas/restsharp-easy/blob/master/LICENSE</PackageLicenseUrl>
-	  <Company></Company>
-	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <PackageIconUrl>https://i.imgur.com/U37jZbH.png</PackageIconUrl>
 	  <PackageProjectUrl>https://github.com/ThiagoBarradas/restsharp-easy</PackageProjectUrl>
-	  <LangVersion>7.3</LangVersion>
+	  <Copyright>Ⓒ Thiago Barradas</Copyright>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
       <PackageReference Include="PackUtils" Version="1.0.72" />
       <PackageReference Include="RestSharp" Version="106.10.1" />
-      <PackageReference Include="RestSharp.Serilog.Auto" Version="1.1.0" />
+      <PackageReference Include="RestSharp.Serilog.Auto" Version="1.1.1" />
     </ItemGroup>
 
 </Project>

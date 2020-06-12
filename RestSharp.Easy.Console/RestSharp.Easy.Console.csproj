@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="PackUtils" Version="1.0.72" />
-    <PackageReference Include="RestSharp.Serilog.Auto" Version="1.1.0" />
+    <PackageReference Include="RestSharp.Serilog.Auto" Version="1.1.1" />
     <PackageReference Include="Serilog.Builder" Version="1.1.1" />
   </ItemGroup>
 
