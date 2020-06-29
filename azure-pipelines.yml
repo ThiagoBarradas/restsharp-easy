@@ -194,7 +194,7 @@ stages:
         command: 'custom'
         projects: '$(sdk_project_path)'
         custom: 'pack'
-        arguments: '-p:Configuration=Release -p:PackageVersion=$(ReleaseVersion) -p:Version=$(Build.SourceBranchName) --output $(Build.ArtifactStagingDirectory) --verbosity'
+        arguments: '-p:Configuration=Release -p:PackageVersion=$(ReleaseVersion) -p:Version=$(Build.SourceBranchName) --output $(Build.ArtifactStagingDirectory)'
     - task: PublishPipelineArtifact@1
       displayName: Store Nuget Packages
       inputs:
