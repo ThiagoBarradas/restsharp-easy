@@ -190,7 +190,8 @@ stages:
     steps:
     - task: DotNetCoreCLI@2
       displayName: 'Packing Release'
-       command: 'custom'
+      inputs:
+        command: 'custom'
         projects: '$(sdk_project_path)'
         custom: 'pack'
         arguments: '-p:Configuration=Release -p:PackageVersion=$(ReleaseVersion) -p:Version=$(ReleaseVersion) --output $(Build.ArtifactStagingDirectory) --verbosity'
