@@ -173,9 +173,9 @@ stages:
         organization: '$(sonarcloud_organization)'
 
   - job: PackingNuget
-    dependsOn: |
-      QualityAnalysis 
-      UpdateBuildVersion
+    dependsOn:
+    - QualityAnalysis 
+    - UpdateBuildVersion
     workspace:
       clean: all
     condition: |
