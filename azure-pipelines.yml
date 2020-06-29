@@ -64,6 +64,7 @@ stages:
         fi
       displayName: Update Version Number
       name: UpdateBuildVersionTask
+
   - job: Build
     dependsOn: UpdateBuildVersion
     condition: succeeded()
@@ -190,12 +191,10 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: 'Packing Release'
       inputs:
-        command: 'pack'
-        packagesToPack: '$(sdk_project_path)'
-        configuration: 'Release'
-        versioningScheme: 'byEnvVar'
-        versionEnvVar: 'ReleaseVersion'
-        verbosityPack: 'Diagnostic'
+        command: 'custom'
+        projects: '$(sdk_project_path)'
+        custom: 'pack'
+        arguments: '-p:Configuration=Release -p:PackageVersion=$(ReleaseVersion) -p:Version=$(Build.SourceBranchName) --output $(Build.ArtifactStagingDirectory)'
     - task: PublishPipelineArtifact@1
       displayName: Store Nuget Packages
       inputs:
