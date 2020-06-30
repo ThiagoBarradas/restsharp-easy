@@ -53,11 +53,13 @@ stages:
             echo "Version: $(Build.SourceBranchName)"
             echo "         $(Build.SourceBranchName)-preview.$(current_counter)"
             echo "##vso[build.updatebuildnumber]$(Build.SourceBranchName)-preview.$(current_counter)"
+            echo "##vso[task.setvariable variable=PureVersion;isOutput=true]$(Build.SourceBranchName)"
         elif [ "$(Build.SourceBranchName)" = "master" ];
         then
             echo "Generate Release Version"
             echo "Version: $(GitVersion.SemVer)"
             echo "##vso[build.updatebuildnumber]$(GitVersion.SemVer)"
+            echo "##vso[task.setvariable variable=PureVersion;isOutput=true]$(GitVersion.SemVer)"
         else
             echo "Generate Development Version"
             echo "Version: $(Build.BuildNumber)"
@@ -171,7 +173,9 @@ stages:
         organization: '$(sonarcloud_organization)'
 
   - job: PackingNuget
-    dependsOn: QualityAnalysis 
+    dependsOn:
+    - QualityAnalysis 
+    - UpdateBuildVersion
     workspace:
       clean: all
     condition: |
@@ -187,6 +191,7 @@ stages:
       )
     variables:
       ReleaseVersion: $(Build.BuildNumber) 
+      PureVersion: $[ dependencies.UpdateBuildVersion.outputs['UpdateBuildVersionTask.PureVersion'] ]
     steps:
     - task: DotNetCoreCLI@2
       displayName: 'Packing Release'
@@ -194,7 +199,7 @@ stages:
         command: 'custom'
         projects: '$(sdk_project_path)'
         custom: 'pack'
-        arguments: '-p:Configuration=Release -p:PackageVersion=$(ReleaseVersion) -p:Version=$(Build.SourceBranchName) --output $(Build.ArtifactStagingDirectory)'
+        arguments: '-p:Configuration=Release -p:PackageVersion=$(ReleaseVersion) -p:Version=$(PureVersion) --output $(Build.ArtifactStagingDirectory)'
     - task: PublishPipelineArtifact@1
       displayName: Store Nuget Packages
       inputs:
