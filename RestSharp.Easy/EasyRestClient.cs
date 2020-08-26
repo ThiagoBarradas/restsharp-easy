@@ -3,9 +3,11 @@ using PackUtils;
 using RestSharp.Easy.Interfaces;
 using RestSharp.Easy.Models;
 using RestSharp.Serilog.Auto;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +34,8 @@ namespace RestSharp.Easy
             string userAgent = "RestSharp Easy! https://github.com/ThiagoBarradas/restsharp-easy",
             string[] jsonBlackList = null,
             List<JsonConverter> converters = null,
-            bool enableLog = true)
+            bool enableLog = true,
+            Dictionary<HttpStatusCode, LogEventLevel> overrideLogLevelByStatusCode = null)
         {
             var config = new EasyRestClientConfiguration
             {
@@ -45,7 +48,8 @@ namespace RestSharp.Easy
                 UserAgent = userAgent,
                 JsonLogBlacklist = jsonBlackList ?? EasyRestClientConfiguration.DefaultJsonBlacklist,
                 Converters = converters,
-                EnableLog = enableLog
+                EnableLog = enableLog,
+                OverrideLogLevelByStatusCode = overrideLogLevelByStatusCode
             };
 
             this.Initialize(config);
@@ -146,7 +150,9 @@ namespace RestSharp.Easy
 
             client.Timeout = configuration.TimeoutInMs;
             client.EnableLog(configuration.EnableLog);
-            
+
+            client.Configuration.OverrideLogLevelByStatusCode = configuration.OverrideLogLevelByStatusCode;
+
             if (configuration.RequestKey != null)
             {
                 client.AddLogAdditionalInfo("RequestKey", configuration.RequestKey);

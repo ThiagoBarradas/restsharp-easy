@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Serilog.Events;
 using System.Collections.Generic;
+using System.Net;
 
 namespace RestSharp.Easy.Models
 {
@@ -38,8 +40,8 @@ namespace RestSharp.Easy.Models
 
         public List<JsonConverter> Converters { get; set; }
 
-        public string MerchantId { get; set; }
-
         public string UserAgent { get; set; } = "RestSharp Easy! https://github.com/ThiagoBarradas/restsharp-easy";
+
+        public Dictionary<HttpStatusCode, LogEventLevel> OverrideLogLevelByStatusCode { get; set; }
     }
 }

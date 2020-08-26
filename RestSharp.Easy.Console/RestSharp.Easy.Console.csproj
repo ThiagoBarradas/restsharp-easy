@@ -7,8 +7,8 @@
 
   <ItemGroup>
     <PackageReference Include="PackUtils" Version="1.2.1" />
-    <PackageReference Include="RestSharp.Serilog.Auto" Version="1.1.1" />
-    <PackageReference Include="Serilog.Builder" Version="1.1.1" />
+    <PackageReference Include="RestSharp.Serilog.Auto" Version="1.2.0" />
+    <PackageReference Include="Serilog.Builder" Version="1.1.4" />
   </ItemGroup>
 
   <ItemGroup>
