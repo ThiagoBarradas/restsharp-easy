@@ -18,20 +18,20 @@ namespace RestSharp.Easy.Interfaces
         void AddBasic(string username, string password);
 
         BaseResponse<TSuccess, TError> SendRequest<TSuccess, TError>(
-            HttpMethod method, 
-            string endpoint, 
-            object body = null, 
-            IDictionary<string, string> query = null, 
-            IDictionary<string, string> headers = null)
-               where TSuccess : class, new() 
+            HttpMethod method,
+            string endpoint,
+            object body = null,
+            ICollection<KeyValuePair<string, string>> query = null,
+            ICollection<KeyValuePair<string, string>> headers = null)
+               where TSuccess : class, new()
                where TError : class, new();
 
         Task<BaseResponse<TSuccess, TError>> SendRequestAsync<TSuccess, TError>(
             HttpMethod method,
             string endpoint,
             object body = null,
-            IDictionary<string, string> query = null,
-            IDictionary<string, string> headers = null)
+            ICollection<KeyValuePair<string, string>> query = null,
+            ICollection<KeyValuePair<string, string>> headers = null)
                where TSuccess : class, new()
                where TError : class, new();
 
@@ -39,16 +39,16 @@ namespace RestSharp.Easy.Interfaces
            HttpMethod method,
            string endpoint,
            object body = null,
-           IDictionary<string, string> query = null,
-           IDictionary<string, string> headers = null)
+           ICollection<KeyValuePair<string, string>> query = null,
+           ICollection<KeyValuePair<string, string>> headers = null)
               where TSuccess : class, new();
 
         Task<BaseResponse<TSuccess>> SendRequestAsync<TSuccess>(
             HttpMethod method,
             string endpoint,
             object body = null,
-            IDictionary<string, string> query = null,
-            IDictionary<string, string> headers = null)
+            ICollection<KeyValuePair<string, string>> query = null,
+            ICollection<KeyValuePair<string, string>> headers = null)
                where TSuccess : class, new();
     }
 }
