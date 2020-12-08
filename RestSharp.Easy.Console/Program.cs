@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using Serilog.Builder;
 using Serilog.Builder.Models;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 
@@ -33,6 +34,16 @@ namespace RestSharp.Easy.Console
                 .GetAwaiter().GetResult();
 
             var result2 = client.SendRequest<dynamic>(HttpMethod.Post, "restsharp-easy", body);
+
+            var query3 = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("page", "1"),
+                new KeyValuePair<string, string>("size", "10"),
+                new KeyValuePair<string, string>("ids", "1"),
+                new KeyValuePair<string, string>("ids", "2"),
+            };
+
+            var result3 = client.SendRequest<dynamic>(HttpMethod.Post, "restsharp-easy", body, query: query3);
 
             Thread.Sleep(5000);
         }
