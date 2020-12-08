@@ -7,6 +7,7 @@ using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -81,7 +82,7 @@ namespace RestSharp.Easy
             this.AddAuthorization($"Basic {basic}");
         }
 
-        public BaseResponse<TSuccess, TError> SendRequest<TSuccess, TError>(HttpMethod method, string endpoint, object body = null, IDictionary<string, string> query = null, IDictionary<string, string> headers = null)
+        public BaseResponse<TSuccess, TError> SendRequest<TSuccess, TError>(HttpMethod method, string endpoint, object body = null, ICollection<KeyValuePair<string, string>> query = null, ICollection<KeyValuePair<string, string>> headers = null)
             where TSuccess : class, new()
             where TError : class, new()
         {
@@ -89,7 +90,7 @@ namespace RestSharp.Easy
                 .GetAwaiter().GetResult();
         }
 
-        public async Task<BaseResponse<TSuccess, TError>> SendRequestAsync<TSuccess, TError>(HttpMethod method, string endpoint, object body = null, IDictionary<string, string> query = null, IDictionary<string, string> headers = null)
+        public async Task<BaseResponse<TSuccess, TError>> SendRequestAsync<TSuccess, TError>(HttpMethod method, string endpoint, object body = null, ICollection<KeyValuePair<string, string>> query = null, ICollection<KeyValuePair<string, string>> headers = null)
             where TSuccess : class, new()
             where TError : class, new()
         {
@@ -132,12 +133,12 @@ namespace RestSharp.Easy
             return response;
         }
 
-        public BaseResponse<TSuccess> SendRequest<TSuccess>(HttpMethod method, string endpoint, object body = null, IDictionary<string, string> query = null, IDictionary<string, string> headers = null) where TSuccess : class, new()
+        public BaseResponse<TSuccess> SendRequest<TSuccess>(HttpMethod method, string endpoint, object body = null, ICollection<KeyValuePair<string, string>> query = null, ICollection<KeyValuePair<string, string>> headers = null) where TSuccess : class, new()
         {
             return this.SendRequest<TSuccess, dynamic>(method, endpoint, body, query, headers);
         }
 
-        public async Task<BaseResponse<TSuccess>> SendRequestAsync<TSuccess>(HttpMethod method, string endpoint, object body = null, IDictionary<string, string> query = null, IDictionary<string, string> headers = null) where TSuccess : class, new()
+        public async Task<BaseResponse<TSuccess>> SendRequestAsync<TSuccess>(HttpMethod method, string endpoint, object body = null, ICollection<KeyValuePair<string, string>> query = null, ICollection<KeyValuePair<string, string>> headers = null) where TSuccess : class, new()
         {
             return await this.SendRequestAsync<TSuccess, dynamic>(method, endpoint, body, query, headers);
         }
