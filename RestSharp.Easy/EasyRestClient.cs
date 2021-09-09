@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using PackUtils;
+using RestSharp.Easy.Helper;
 using RestSharp.Easy.Interfaces;
 using RestSharp.Easy.Models;
 using RestSharp.Serilog.Auto;
@@ -98,7 +98,7 @@ namespace RestSharp.Easy
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var restSharpMethod = EnumUtility.ConvertToEnum<Method>(method.Method.ToUpper());
+            var restSharpMethod = EnumHelper.ConvertToEnum<Method>(method.Method.ToUpper());
             var restRequest = new RestRequest(endpoint, restSharpMethod);
             restRequest.AddNewtonsoftRequestHandler(this.NewtonsoftRestsharpJsonSerializer);
 
