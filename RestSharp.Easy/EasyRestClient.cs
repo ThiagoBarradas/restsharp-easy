@@ -33,7 +33,8 @@ namespace RestSharp.Easy
             string requestKey = null,
             IDictionary<string, string> additionalLogItems = null,
             string userAgent = "RestSharp Easy! https://github.com/ThiagoBarradas/restsharp-easy",
-            string[] jsonBlackList = null,
+            string[] requestJsonBlackList = null,
+            string[] responseJsonBlackList = null,
             List<JsonConverter> converters = null,
             bool enableLog = true,
             Dictionary<HttpStatusCode, LogEventLevel> overrideLogLevelByStatusCode = null)
@@ -47,7 +48,8 @@ namespace RestSharp.Easy
                 RequestKey = requestKey,
                 AdditionalLogItems = additionalLogItems,
                 UserAgent = userAgent,
-                JsonLogBlacklist = jsonBlackList ?? EasyRestClientConfiguration.DefaultJsonBlacklist,
+                RequestJsonLogBlacklist = requestJsonBlackList ?? EasyRestClientConfiguration.DefaultJsonBlacklist,
+                ResponseJsonLogBlacklist = responseJsonBlackList ?? EasyRestClientConfiguration.DefaultJsonBlacklist,
                 Converters = converters,
                 EnableLog = enableLog,
                 OverrideLogLevelByStatusCode = overrideLogLevelByStatusCode
@@ -167,7 +169,8 @@ namespace RestSharp.Easy
                 }
             }
 
-            client.Configuration.JsonBlacklist = configuration.JsonLogBlacklist;
+            client.Configuration.RequestJsonBlacklist = configuration.RequestJsonLogBlacklist;
+            client.Configuration.ResponseJsonBlacklist = configuration.ResponseJsonLogBlacklist;
 
             client.UserAgent = configuration.UserAgent;
 
