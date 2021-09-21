@@ -24,7 +24,9 @@ namespace RestSharp.Easy.Models
 
         public string BaseUrl { get; set; }
 
-        public string[] JsonLogBlacklist { get; set; } = EasyRestClientConfiguration.DefaultJsonBlacklist;
+        public string[] RequestJsonLogBlacklist { get; set; } = DefaultJsonBlacklist;
+        
+        public string[] ResponseJsonLogBlacklist { get; set; } = DefaultJsonBlacklist;
 
         public IDictionary<string, string> DefaultHeaders { get; set; }
 
