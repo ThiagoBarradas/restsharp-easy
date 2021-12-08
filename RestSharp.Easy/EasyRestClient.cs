@@ -7,7 +7,6 @@ using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -33,8 +32,7 @@ namespace RestSharp.Easy
             string requestKey = null,
             IDictionary<string, string> additionalLogItems = null,
             string userAgent = "RestSharp Easy! https://github.com/ThiagoBarradas/restsharp-easy",
-            string[] requestJsonBlackList = null,
-            string[] responseJsonBlackList = null,
+            string[] jsonBlackList = null,
             List<JsonConverter> converters = null,
             bool enableLog = true,
             Dictionary<HttpStatusCode, LogEventLevel> overrideLogLevelByStatusCode = null)
@@ -48,8 +46,7 @@ namespace RestSharp.Easy
                 RequestKey = requestKey,
                 AdditionalLogItems = additionalLogItems,
                 UserAgent = userAgent,
-                RequestJsonLogBlacklist = requestJsonBlackList ?? EasyRestClientConfiguration.DefaultJsonBlacklist,
-                ResponseJsonLogBlacklist = responseJsonBlackList ?? EasyRestClientConfiguration.DefaultJsonBlacklist,
+                RequestJsonLogBlacklist = jsonBlackList ?? EasyRestClientConfiguration.DefaultJsonBlacklist,
                 Converters = converters,
                 EnableLog = enableLog,
                 OverrideLogLevelByStatusCode = overrideLogLevelByStatusCode
@@ -57,7 +54,7 @@ namespace RestSharp.Easy
 
             this.Initialize(config);
         }
-
+        
         public EasyRestClient(EasyRestClientConfiguration config)
         {
             this.Initialize(config);
