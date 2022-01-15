@@ -9,15 +9,15 @@ Complement for RestSharp to create fast and easily API Clients (SDK) with Newton
 
 ## Install via NuGet
 
-```
+````command
 PM> Install-Package RestSharp.Easy
-```
+````
 
 ## Sample
 
 > Use it as Scoped or Transient because this client keeps context to use some features like RequestKey, AdditionalLog items, etc.
 
-```
+````csharp
 
 var config = new EasyRestClientConfiguration
 {
@@ -31,7 +31,7 @@ IEasyRestClient client = new EasyRestClient(config);
 
 var response = client.SendRequestAsync<User, ErrorModel>(Method.GET, "users");
 
-```
+````
 
 ## How can I contribute?
 Please, refer to [CONTRIBUTING](.github/CONTRIBUTING.md)
