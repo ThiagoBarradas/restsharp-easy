@@ -28,6 +28,10 @@ namespace RestSharp.Easy.Models
         
         public string[] ResponseJsonLogBlacklist { get; set; } = DefaultJsonBlacklist;
 
+        public string[] HeaderBlacklist { get; set; }
+
+        public string[] QueryStringBlacklist { get; set; }
+
         public IDictionary<string, string> DefaultHeaders { get; set; }
 
         public SerializeStrategyEnum SerializeStrategy { get; set; } = SerializeStrategyEnum.SnakeCase;

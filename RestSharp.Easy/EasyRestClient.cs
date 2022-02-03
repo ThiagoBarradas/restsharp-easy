@@ -168,6 +168,8 @@ namespace RestSharp.Easy
 
             client.Configuration.RequestJsonBlacklist = configuration.RequestJsonLogBlacklist;
             client.Configuration.ResponseJsonBlacklist = configuration.ResponseJsonLogBlacklist;
+            client.Configuration.HeaderBlacklist = configuration.HeaderBlacklist;
+            client.Configuration.QueryStringBlacklist = configuration.QueryStringBlacklist;
 
             client.UserAgent = configuration.UserAgent;
 
