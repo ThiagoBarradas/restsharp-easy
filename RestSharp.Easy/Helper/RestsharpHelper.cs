@@ -20,6 +20,19 @@ namespace RestSharp.Easy.Helper
             }
         }
 
+        public static void AddQueryString(this RestRequest request, IDictionary<string, string> headers)
+        {
+            if (headers?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var queryItem in headers)
+            {
+                request.AddParameter(queryItem.Key, queryItem, ParameterType.QueryString);
+            }
+        }
+
         public static void AddJsonBodyAsString(this RestRequest request, string content)
         {
             if (request.Method != Method.GET && !string.IsNullOrWhiteSpace(content))
@@ -47,17 +60,11 @@ namespace RestSharp.Easy.Helper
             }
         }
 
-        public static void AddQueryString(this RestRequest request, IDictionary<string, string> headers)
+        public static object GetRequestBody(this RestRequest request)
         {
-            if (headers?.Any() != true)
-            {
-                return;
-            }
+            if (request.Body != null) return request.Body;
 
-            foreach (var queryItem in headers)
-            {
-                request.AddParameter(queryItem.Key, queryItem, ParameterType.QueryString);
-            }
+            return request.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value;
         }
     }
 }
