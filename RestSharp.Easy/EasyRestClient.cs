@@ -18,11 +18,9 @@ namespace RestSharp.Easy
     {
         public IRestClient RestClient { get; set; }
 
-        private NewtonsoftRestsharpJsonSerializer NewtonsoftRestsharpJsonSerializer;
+        public JsonSerializerSettings JsonSerializerSettings { get; private set; }
 
-        private JsonSerializer JsonSerializer;
-
-        private JsonSerializerSettings JsonSerializerSettings;
+        public NewtonsoftRestsharpJsonSerializer NewtonsoftRestsharpJsonSerializer { get; private set; }
 
         public EasyRestClient(
             string baseUrl = null,
@@ -54,7 +52,7 @@ namespace RestSharp.Easy
 
             this.Initialize(config);
         }
-        
+
         public EasyRestClient(EasyRestClientConfiguration config)
         {
             this.Initialize(config);
@@ -81,12 +79,54 @@ namespace RestSharp.Easy
             this.AddAuthorization($"Basic {basic}");
         }
 
+        public BaseResponse<TSuccess, TError> SendRequest<TSuccess, TError>(RestRequest restRequest)
+            where TSuccess : class, new()
+            where TError : class, new()
+        {
+            return this.SendRequestAsync<TSuccess, TError>(restRequest)
+                .GetAwaiter().GetResult();
+        }
+
         public BaseResponse<TSuccess, TError> SendRequest<TSuccess, TError>(HttpMethod method, string endpoint, object body = null, ICollection<KeyValuePair<string, string>> query = null, ICollection<KeyValuePair<string, string>> headers = null)
             where TSuccess : class, new()
             where TError : class, new()
         {
             return this.SendRequestAsync<TSuccess, TError>(method, endpoint, body, query, headers)
                 .GetAwaiter().GetResult();
+        }
+
+        public BaseResponse<TSuccess> SendRequest<TSuccess>(RestRequest restRequest) where TSuccess : class, new()
+        {
+            return this.SendRequest<TSuccess, dynamic>(restRequest);
+        }
+
+        public BaseResponse<TSuccess> SendRequest<TSuccess>(HttpMethod method, string endpoint, object body = null, ICollection<KeyValuePair<string, string>> query = null, ICollection<KeyValuePair<string, string>> headers = null) where TSuccess : class, new()
+        {
+            return this.SendRequest<TSuccess, dynamic>(method, endpoint, body, query, headers);
+        }
+
+        public async Task<BaseResponse<TSuccess, TError>> SendRequestAsync<TSuccess, TError>(RestRequest restRequest)
+            where TSuccess : class, new()
+            where TError : class, new()
+        {
+            BaseResponse<TSuccess, TError> response = new BaseResponse<TSuccess, TError>();
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            var body = restRequest.GetRequestBody();
+
+            if (body != null && restRequest.Method != Method.GET)
+            {
+                response.RawRequest = JsonConvert.SerializeObject(body, JsonSerializerSettings);
+            }
+
+            var restResponse = await this.RestClient.ExecuteAsync(restRequest);
+            this.HandleResponse(response, restResponse);
+
+            stopwatch.Stop();
+            response.ElapsedTime = stopwatch.ElapsedMilliseconds;
+
+            return response;
         }
 
         public async Task<BaseResponse<TSuccess, TError>> SendRequestAsync<TSuccess, TError>(HttpMethod method, string endpoint, object body = null, ICollection<KeyValuePair<string, string>> query = null, ICollection<KeyValuePair<string, string>> headers = null)
@@ -132,9 +172,10 @@ namespace RestSharp.Easy
             return response;
         }
 
-        public BaseResponse<TSuccess> SendRequest<TSuccess>(HttpMethod method, string endpoint, object body = null, ICollection<KeyValuePair<string, string>> query = null, ICollection<KeyValuePair<string, string>> headers = null) where TSuccess : class, new()
+        public async Task<BaseResponse<TSuccess>> SendRequestAsync<TSuccess>(RestRequest restRequest)
+            where TSuccess : class, new()
         {
-            return this.SendRequest<TSuccess, dynamic>(method, endpoint, body, query, headers);
+            return await this.SendRequestAsync<TSuccess, dynamic>(restRequest);
         }
 
         public async Task<BaseResponse<TSuccess>> SendRequestAsync<TSuccess>(HttpMethod method, string endpoint, object body = null, ICollection<KeyValuePair<string, string>> query = null, ICollection<KeyValuePair<string, string>> headers = null) where TSuccess : class, new()
@@ -182,26 +223,26 @@ namespace RestSharp.Easy
             }
 
             var strategy = configuration.SerializeStrategy.ToString();
-            this.JsonSerializer = strategy.GetNewtonsoftJsonSerializer();
+            var jsonSerializer = strategy.GetNewtonsoftJsonSerializer();
             this.JsonSerializerSettings = strategy.GetNewtonsoftJsonSerializerSettings();
 
             if (configuration.Converters != null)
             {
-                foreach(var converter in configuration.Converters)
+                foreach (var converter in configuration.Converters)
                 {
-                    this.JsonSerializer.Converters.Add(converter);
+                    jsonSerializer.Converters.Add(converter);
                     this.JsonSerializerSettings.Converters.Add(converter);
                 }
             }
 
-            this.NewtonsoftRestsharpJsonSerializer = new NewtonsoftRestsharpJsonSerializer(this.JsonSerializer);
+            this.NewtonsoftRestsharpJsonSerializer = new NewtonsoftRestsharpJsonSerializer(jsonSerializer);
             client.AddNewtonsoftResponseHandler(this.NewtonsoftRestsharpJsonSerializer);
 
             this.RestClient = client;
         }
 
         private void HandleResponse<TSuccess, TError>(
-            BaseResponse<TSuccess, TError> response, 
+            BaseResponse<TSuccess, TError> response,
             IRestResponse restResponse)
         {
             response.StatusCode = restResponse.StatusCode;
@@ -224,15 +265,15 @@ namespace RestSharp.Easy
                     response.Exception = e;
                 }
             }
-            
-            if (restResponse.IsSuccessful == false && 
+
+            if (restResponse.IsSuccessful == false &&
                 string.IsNullOrWhiteSpace(response.RawResponse) == false)
             {
                 try
                 {
                     response.Error = JsonConvert.DeserializeObject<TError>(response.RawResponse, this.JsonSerializerSettings);
-                } 
-                catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     response.Exception = e;
                 }
